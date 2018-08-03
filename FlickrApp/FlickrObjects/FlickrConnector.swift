@@ -8,13 +8,9 @@
 
 import UIKit
 
-enum Category: Int {
-    case cats = 0
-    case dogs = 1
-    case popular = 2
-    case recent = 3
-    
-}
+
+fileprivate let imageCache = NSCache<NSString, UIImage>()
+
 class FlickrConnector: NSObject {
     typealias FlickrResponse = (Error?, [FlickrPhoto]?) -> Void
     typealias FlickrImage = (Error?, UIImage?) -> Void
@@ -76,7 +72,7 @@ class FlickrConnector: NSObject {
 
             if error != nil {
                 print("Error fetching photos: \(String(describing: error))")
-                onCompletion(error   , nil)
+                onCompletion(error, nil)
                 return
             }
 
@@ -95,15 +91,7 @@ class FlickrConnector: NSObject {
                     return }
 
                 let flickrPhotos: [FlickrPhoto] = photosArray.map { photoDictionary in
-
-                    let photoId = photoDictionary["id"] as? String ?? ""
-                    let farm = photoDictionary["farm"] as? Int ?? 0
-                    let secret = photoDictionary["secret"] as? String ?? ""
-                    let server = photoDictionary["server"] as? String ?? ""
-                    let title = photoDictionary["title"] as? String ?? ""
-
-                    let flickrPhoto = FlickrPhoto(photoId: photoId, farm: farm, secret: secret, server: server, title: title)
-                    return flickrPhoto
+                    return FlickrPhoto(photoDictionary: photoDictionary)
                 }
 
                 onCompletion(nil, flickrPhotos)

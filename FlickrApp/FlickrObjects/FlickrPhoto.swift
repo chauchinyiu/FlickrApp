@@ -23,4 +23,12 @@ struct FlickrPhoto {
     var bigPhotoUrl: URL {
          return URL(string: "https://farm\(farm).staticflickr.com/\(server)/\(photoId)_\(secret)_b.jpg")!
     }
+    
+    init(photoDictionary: NSDictionary) {
+          photoId = photoDictionary["id"] as? String ?? ""
+          farm = photoDictionary["farm"] as? Int ?? 0
+          secret = photoDictionary["secret"] as? String ?? ""
+          server = photoDictionary["server"] as? String ?? ""
+          title = photoDictionary["title"] as? String ?? ""
+    }
 }
