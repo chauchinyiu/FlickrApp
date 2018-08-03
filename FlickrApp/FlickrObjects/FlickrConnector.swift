@@ -12,6 +12,7 @@ import UIKit
 fileprivate let imageCache = NSCache<NSString, UIImage>()
 
 class FlickrConnector: NSObject {
+    typealias FlickrPhotoInfoResponse = (Error?, Dictionary<String, Any>?) -> Void
     typealias FlickrResponse = (Error?, [FlickrPhoto]?) -> Void
     typealias FlickrImage = (Error?, UIImage?) -> Void
     struct Constants {
@@ -25,12 +26,13 @@ class FlickrConnector: NSObject {
         case search(value: String)
         case recent
         case popular
-        
+        case photoInfo
         var methodKey : String {
             switch (self) {
             case .search: return "flickr.photos.search"
             case .recent: return "flickr.photos.getRecent"
             case .popular: return "flickr.interestingness.getList"
+            case .photoInfo: return "flickr.photos.getInfo"
             }
         }
     }
@@ -106,6 +108,9 @@ class FlickrConnector: NSObject {
         searchTask.resume()
     }
     
+    static func requestPhotoInfo(id: String, onCompletion: @escaping FlickrResponse) -> Void {
+        
+    }
     static func loadImage(url: URL, completion: @escaping FlickrImage) -> Void {
         if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
             completion(nil, cachedImage)
