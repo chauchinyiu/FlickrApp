@@ -21,8 +21,8 @@
 		E5850ECF2110913A00B9C005 /* FlickrAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5850ECE2110913A00B9C005 /* FlickrAppTests.swift */; };
 		E5850EE02110999200B9C005 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5850EDF2110999200B9C005 /* FlickrPhoto.swift */; };
 		E5850EE2211099D600B9C005 /* FlickrConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5850EE1211099D600B9C005 /* FlickrConnector.swift */; };
-		E5D9A5982111DD77000436D0 /* LittleFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5D9A5972111DD77000436D0 /* LittleFramework.framework */; };
-		E5D9A59A2111DD7C000436D0 /* LittleFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E5D9A5972111DD77000436D0 /* LittleFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E5FDBB4D21148EFF00163BD6 /* LittleFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDBB4521148E9A00163BD6 /* LittleFramework.framework */; };
+		E5FDBB4E21148EFF00163BD6 /* LittleFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDBB4521148E9A00163BD6 /* LittleFramework.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E5FDF9202113084D00DAE496 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FDF91F2113084D00DAE496 /* PhotosTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,13 +37,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E5B651C32111D8390089FFC9 /* Embed Frameworks */ = {
+		E5FDBB4C21148EB800163BD6 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E5D9A59A2111DD7C000436D0 /* LittleFramework.framework in Embed Frameworks */,
+				E5FDBB4E21148EFF00163BD6 /* LittleFramework.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,7 +69,7 @@
 		E5850ED02110913A00B9C005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5850EDF2110999200B9C005 /* FlickrPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
 		E5850EE1211099D600B9C005 /* FlickrConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrConnector.swift; sourceTree = "<group>"; };
-		E5D9A5972111DD77000436D0 /* LittleFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LittleFramework.framework; path = Framework/simulator/LittleFramework.framework; sourceTree = "<group>"; };
+		E5FDBB4521148E9A00163BD6 /* LittleFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LittleFramework.framework; path = Framework/LittleFramework.framework; sourceTree = "<group>"; };
 		E5FDF91F2113084D00DAE496 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,7 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5D9A5982111DD77000436D0 /* LittleFramework.framework in Frameworks */,
+				E5FDBB4D21148EFF00163BD6 /* LittleFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,7 +185,7 @@
 		E5B651A02111C5450089FFC9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E5D9A5972111DD77000436D0 /* LittleFramework.framework */,
+				E5FDBB4521148E9A00163BD6 /* LittleFramework.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -200,7 +200,7 @@
 				E5850EB22110913600B9C005 /* Sources */,
 				E5850EB32110913600B9C005 /* Frameworks */,
 				E5850EB42110913600B9C005 /* Resources */,
-				E5B651C32111D8390089FFC9 /* Embed Frameworks */,
+				E5FDBB4C21148EB800163BD6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -463,11 +463,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WPP7258ZA3;
+				DEVELOPMENT_TEAM = DDECC3H9LP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Framework",
-					"$(PROJECT_DIR)/Framework/simulator",
+					"$(PROJECT_DIR)/Framework/Debug-iphoneos",
+					"$(PROJECT_DIR)/Framework/Debug-iphonesimulator",
 				);
 				INFOPLIST_FILE = FlickrApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -486,11 +487,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WPP7258ZA3;
+				DEVELOPMENT_TEAM = DDECC3H9LP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Framework",
-					"$(PROJECT_DIR)/Framework/simulator",
+					"$(PROJECT_DIR)/Framework/Debug-iphoneos",
+					"$(PROJECT_DIR)/Framework/Debug-iphonesimulator",
 				);
 				INFOPLIST_FILE = FlickrApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
