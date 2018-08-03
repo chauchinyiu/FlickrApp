@@ -1,0 +1,11 @@
+framework module LittleFramework {
+  umbrella header "LittleFramework.h"
+
+  export *
+  module * { export * }
+}
+
+module LittleFramework.Swift {
+    header "LittleFramework-Swift.h"
+    requires objc
+}
