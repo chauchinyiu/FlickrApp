@@ -23,19 +23,73 @@ class PhotoDetailViewController: UIViewController,ViewModelDriven {
         // Do any additional setup after loading the view.
     }
     private(set) lazy var imageBinder: Binder<UIImage?> = Binder<UIImage?> {[unowned self] (image) in
-           DispatchQueue.main.async {
-                self.photoImage.image = image
-           }
+        DispatchQueue.main.async {
+            self.photoImage.image = image
+        }
     }
     
     @objc func actionButtonPressed(_ sender:Any?){
-        print("action button")
+        let alert = UIAlertController(title: "Further Actions", message: "Please Select an Option", preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Share Image", style: .default , handler:{ (UIAlertAction)in
+           self.shareImage()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Save Image to document folder", style: .default , handler:{ (UIAlertAction)in
+           self.saveImage()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Open image in browser", style: .default , handler:{ (UIAlertAction)in
+            print("User click Delete button")
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (UIAlertAction)in
+            print("User click Dismiss button")
+        }))
+        
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
     }
     
     
-
     
-
-
-
+    private func shareImage(){
+        // image to share
+        let image = self.photoImage.image
+        
+        // set up activity view controller
+        let imageToShare = [image]
+        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        
+        // exclude some activity types from the list (optional)
+        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+ 
+      private  func saveImage() -> Bool{
+            guard let image = self.photoImage.image else {
+                return false
+            }
+            guard let data = UIImageJPEGRepresentation(image, 1) ?? UIImagePNGRepresentation(image) else {
+                return false
+            }
+            guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
+                return false
+            }
+            do {
+                try data.write(to: directory.appendingPathComponent( "\(String(describing: viewModel.photoName.value)).png")!)
+                return true
+            } catch {
+                print(error.localizedDescription)
+                return false
+            }
+        }
+    
+    
+    
 }
