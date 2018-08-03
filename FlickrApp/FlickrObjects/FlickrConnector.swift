@@ -105,22 +105,32 @@ class FlickrConnector: NSObject {
         })
         searchTask.resume()
     }
+    
     static func loadImage(url: URL, completion: @escaping FlickrImage) -> Void {
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if error != nil {
-                print("Failed fetching image:", FlickrConnector.RequestError.noPhoto)
-                  completion(FlickrConnector.RequestError.noPhoto, nil)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                print("Not a proper HTTPURLResponse or statusCode")
-                completion(RequestError.invalidResponse, nil)
-                return
-            }
-                 completion(nil ,UIImage(data: data!))
-            }
-            .resume()
+        if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
+            completion(nil, cachedImage)
+        } else {
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if error != nil {
+                    print("Failed fetching image:", FlickrConnector.RequestError.noPhoto)
+                    completion(FlickrConnector.RequestError.noPhoto, nil)
+                    return
+                }
+                
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    print("Not a proper HTTPURLResponse or statusCode")
+                    completion(RequestError.invalidResponse, nil)
+                    return
+                }
+                if let data = data, let image = UIImage(data: data) {
+                     imageCache.setObject(image, forKey: url.absoluteString as NSString)
+                     completion(nil, image)
+                }else{
+                      completion(RequestError.invalidResponse, nil)
+                }
+               
+                }.resume()
+        }
     }
 }
 
