@@ -36,11 +36,18 @@ class PhotoDetailViewController: UIViewController,ViewModelDriven {
         }))
         
         alert.addAction(UIAlertAction(title: "Save Image to document folder", style: .default , handler:{ (UIAlertAction)in
-           self.saveImage()
+            let success = self.saveImageInDocuments()
+            if success == true {
+                self.showAlert(message: "Successfully saved the image the app documents folder")
+            }
+            else {
+                self.showAlert(message: "Cannot save the image!")
+            }
         }))
         
         alert.addAction(UIAlertAction(title: "Open image in browser", style: .default , handler:{ (UIAlertAction)in
-            print("User click Delete button")
+ 
+            self.openImageInBrowser()
         }))
         
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (UIAlertAction)in
@@ -71,7 +78,7 @@ class PhotoDetailViewController: UIViewController,ViewModelDriven {
     }
     
  
-      private  func saveImage() -> Bool{
+      private func saveImageInDocuments() -> Bool{
             guard let image = self.photoImage.image else {
                 return false
             }
@@ -82,7 +89,11 @@ class PhotoDetailViewController: UIViewController,ViewModelDriven {
                 return false
             }
             do {
-                try data.write(to: directory.appendingPathComponent( "\(String(describing: viewModel.photoName.value)).png")!)
+                var name = "defaultname.png"
+                if let text = self.viewModel.photoName.value {
+                    name = "\(text).png"
+                }
+              try data.write(to: directory.appendingPathComponent(name)!)
                 return true
             } catch {
                 print(error.localizedDescription)
@@ -90,6 +101,20 @@ class PhotoDetailViewController: UIViewController,ViewModelDriven {
             }
         }
     
+    private func openImageInBrowser(){
+        guard let url = self.viewModel.bigPhotoUrl.value else {
+            return
+        }
+        UIApplication.shared.open( url, options: [:], completionHandler: { (status) in
+            
+        })
+    }
     
-    
+    private func showAlert(message:String) {
+        let alertController = UIAlertController(title: "Flickr App", message:
+            message, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
