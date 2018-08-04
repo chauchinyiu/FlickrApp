@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -116,19 +117,72 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lvb-Zx-gcG">
-                                <rect key="frame" x="0.0" y="64" width="375" height="459"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="375"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Lvb-Zx-gcG" secondAttribute="height" multiplier="1:1" id="j14-ie-j33"/>
+                                </constraints>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="7iH-nq-rvp">
+                                <rect key="frame" x="0.0" y="439" width="375" height="197"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="N3n-lL-5hi">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="137"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" text="Owner:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HbF-ST-Shv" userLabel="Owner:">
+                                                <rect key="frame" x="0.0" y="0.0" width="55.5" height="137"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uzh-kK-GX3">
+                                                <rect key="frame" x="65.5" y="0.0" width="309.5" height="137"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wBz-EP-tdd">
+                                        <rect key="frame" x="0.0" y="142" width="375" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" text="Date of taken:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d63-wa-ZSC">
+                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="50"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4X-Mq-Mtb">
+                                                <rect key="frame" x="187.5" y="0.0" width="187.5" height="50"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CbC-TK-qCd">
+                                        <rect key="frame" x="0.0" y="197" width="375" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Lvb-Zx-gcG" firstAttribute="top" secondItem="LgJ-pW-JC7" secondAttribute="bottom" id="5UM-mQ-F1J"/>
+                            <constraint firstItem="7iH-nq-rvp" firstAttribute="top" secondItem="Lvb-Zx-gcG" secondAttribute="bottom" id="R94-UM-O42"/>
                             <constraint firstAttribute="trailing" secondItem="Lvb-Zx-gcG" secondAttribute="trailing" id="gMs-9V-GSu"/>
-                            <constraint firstItem="AC6-P1-hKd" firstAttribute="top" secondItem="Lvb-Zx-gcG" secondAttribute="bottom" constant="144" id="gQZ-hB-tsa"/>
                             <constraint firstItem="Lvb-Zx-gcG" firstAttribute="leading" secondItem="Lwb-Rd-Psy" secondAttribute="leading" id="gep-aX-V8P"/>
+                            <constraint firstItem="7iH-nq-rvp" firstAttribute="leading" secondItem="Lwb-Rd-Psy" secondAttribute="leading" id="kVB-ef-W8h"/>
+                            <constraint firstAttribute="trailing" secondItem="7iH-nq-rvp" secondAttribute="trailing" id="vwc-EF-DC4"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dateOfTaken" destination="z4X-Mq-Mtb" id="NzT-eT-bJQ"/>
+                        <outlet property="ownerName" destination="uzh-kK-GX3" id="RYs-fY-Afh"/>
                         <outlet property="photoImage" destination="Lvb-Zx-gcG" id="Z9r-ij-isB"/>
+                        <outlet property="tags" destination="CbC-TK-qCd" id="OE4-s9-GfG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uBn-sB-YCU" userLabel="First Responder" sceneMemberID="firstResponder"/>
