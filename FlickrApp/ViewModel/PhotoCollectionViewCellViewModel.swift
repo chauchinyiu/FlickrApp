@@ -15,8 +15,8 @@ class PhotoCollectionViewCellViewModel: ViewModel {
     let photoImageUrl = Bindable<URL?>(nil)
     let photoImage = Bindable<UIImage?>(nil)
     
-    let flickrPhoto: FlickrPhoto
-    init(photo: FlickrPhoto) {
+    let flickrPhoto: Photo
+    init(photo: Photo) {
         flickrPhoto = photo
         photoID.value = photo.photoId
         photoName.value = photo.title
