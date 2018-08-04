@@ -9,13 +9,13 @@
 import UIKit
 import Foundation
 
-struct FlickrPhoto {
+struct Photo {
     let photoId: String
     let farm: Int
     let secret: String
     let server: String
     let title: String
-    
+    let description: String
     var photoUrl: URL {
         return URL(string: "https://farm\(farm).staticflickr.com/\(server)/\(photoId)_\(secret)_m.jpg")!
     }
@@ -30,5 +30,11 @@ struct FlickrPhoto {
           secret = photoDictionary["secret"] as? String ?? ""
           server = photoDictionary["server"] as? String ?? ""
           title = photoDictionary["title"] as? String ?? ""
+           if let content = photoDictionary["description"] as? NSDictionary,
+              let text = content["_content"] as? String {
+             description = text
+           }else{
+            description = ""
+            }
     }
 }

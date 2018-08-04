@@ -12,27 +12,40 @@ import UIKit
 fileprivate let imageCache = NSCache<NSString, UIImage>()
 
 class FlickrConnector: NSObject {
-    typealias FlickrPhotoInfoResponse = (Error?, Dictionary<String, Any>?) -> Void
-    typealias FlickrResponse = (Error?, [FlickrPhoto]?) -> Void
+    typealias FlickrPhotoInfoResponse = (Error?, Photo?) -> Void
+    typealias FlickrResponse = (Error?, [Photo]?) -> Void
     typealias FlickrImage = (Error?, UIImage?) -> Void
     struct Constants {
         static let flickrApiKey = "c4ab91d735bca1f8dbb4ccb5887cef4f"
         static let flickApiUrl = "https://api.flickr.com/services/rest/"
+        
     }
     
+   static var basicUrlComponents : URLComponents? {
+       var components = URLComponents(string: Constants.flickApiUrl)
+         
+        components?.queryItems = [URLQueryItem(name: "api_key", value:Constants.flickrApiKey),
+                                      URLQueryItem(name: "format", value:"json"),
+                                      URLQueryItem(name: "nojsoncallback", value:"1")]
+        return components
+    }
+    
+
 
     
     enum Method {
         case search(value: String)
         case recent
         case popular
-        case photoInfo
+        case photo
+        
         var methodKey : String {
             switch (self) {
             case .search: return "flickr.photos.search"
             case .recent: return "flickr.photos.getRecent"
             case .popular: return "flickr.interestingness.getList"
-            case .photoInfo: return "flickr.photos.getInfo"
+            case .photo: return "flickr.photos.getInfo"
+                
             }
         }
     }
@@ -57,19 +70,15 @@ class FlickrConnector: NSObject {
     
     static func requestPhotos(method: Method, onCompletion: @escaping FlickrResponse) -> Void {
         
-        var components = URLComponents(string: Constants.flickApiUrl)
-        components?.queryItems = []
-        components?.queryItems?.append(URLQueryItem(name: "api_key", value:Constants.flickrApiKey))
-        components?.queryItems?.append(URLQueryItem(name: "per_page", value:"30"))
-        components?.queryItems?.append(URLQueryItem(name: "format", value:"json"))
-        components?.queryItems?.append(URLQueryItem(name: "nojsoncallback", value:"1"))
-        components?.queryItems?.append(URLQueryItem(name: "method", value:method.methodKey))
+        var components = self.basicUrlComponents
         
+        components?.queryItems?.append(URLQueryItem(name: "method", value:method.methodKey))
+        components?.queryItems?.append(URLQueryItem(name: "per_page", value:"15"))
         if case .search(let value) = method
         {
             components?.queryItems?.append(URLQueryItem(name: "tags", value: value))
         }
-  
+ 
         let searchTask = URLSession.shared.dataTask(with: (components?.url)!, completionHandler: {data, response, error -> Void in
 
             if error != nil {
@@ -80,20 +89,15 @@ class FlickrConnector: NSObject {
 
             do {
                 let resultsDictionary = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: AnyObject]
-                
-                guard resultsDictionary != nil else {
-                    onCompletion(RequestError.invalidResponse, nil)
-                    return
-                }
-                guard let photosContainer = resultsDictionary!["photos"] as? NSDictionary else {
-                     onCompletion(RequestError.invalidResponse, nil)
-                    return }
-                guard let photosArray = photosContainer["photo"] as? [NSDictionary] else {
+ 
+                guard resultsDictionary != nil,
+                    let photosContainer = resultsDictionary!["photos"] as? NSDictionary,
+                    let photosArray = photosContainer["photo"] as? [NSDictionary] else {
                     onCompletion(RequestError.invalidResponse, nil)
                     return }
 
-                let flickrPhotos: [FlickrPhoto] = photosArray.map { photoDictionary in
-                    return FlickrPhoto(photoDictionary: photoDictionary)
+                let flickrPhotos: [Photo] = photosArray.map { photoDictionary in
+                    return Photo(photoDictionary: photoDictionary)
                 }
 
                 onCompletion(nil, flickrPhotos)
@@ -108,8 +112,42 @@ class FlickrConnector: NSObject {
         searchTask.resume()
     }
     
-    static func requestPhotoInfo(id: String, onCompletion: @escaping FlickrResponse) -> Void {
+    static func requestPhotoInfo(id: String, onCompletion: @escaping FlickrPhotoInfoResponse) -> Void {
+    
+        var components = self.basicUrlComponents
+        components?.queryItems?.append(URLQueryItem(name: "method", value:Method.photo.methodKey))
+        components?.queryItems?.append(URLQueryItem(name: "photo_id", value: id))
         
+        let task = URLSession.shared.dataTask(with: (components?.url)!, completionHandler: {data, response, error -> Void in
+            
+            if error != nil {
+                print("Error fetching photos: \(String(describing: error))")
+                onCompletion(error, nil)
+                return
+            }
+            
+            do {
+                let resultsDictionary = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: AnyObject]
+                
+                
+                guard resultsDictionary != nil,
+                    let photoDictionary = resultsDictionary!["photo"] as? NSDictionary else {
+                    onCompletion(RequestError.invalidResponse, nil)
+                    return }
+                
+                print("----- photo -------")
+                print(photoDictionary)
+                 print("------------------")
+                onCompletion(nil, Photo(photoDictionary: photoDictionary))
+                
+            } catch let error as NSError {
+                print("Error parsing JSON: \(error)")
+                onCompletion(error, nil)
+                return
+            }
+            
+        })
+      task.resume()
     }
     static func loadImage(url: URL, completion: @escaping FlickrImage) -> Void {
         if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
