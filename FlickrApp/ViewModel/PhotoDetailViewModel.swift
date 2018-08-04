@@ -14,6 +14,11 @@ final class PhotoDetailViewModel: ViewModel {
     let photoName = Bindable<String?>(nil)
     let bigPhotoUrl = Bindable<URL?>(nil)
     let bigPhoto = Bindable<UIImage?>(nil)
+    let owner = Bindable<String?>(nil)
+    let dateOfTaken = Bindable<String?>(nil)
+    let tags = Bindable<String?>(nil)
+    let description = Bindable<String?>(nil)
+    let photoDetail = Bindable<Photo?>(nil)
     
     init(collectionViewCellViewModel: PhotoCollectionViewCellViewModel) {
         photoID.value = collectionViewCellViewModel.flickrPhoto.photoId
@@ -22,6 +27,16 @@ final class PhotoDetailViewModel: ViewModel {
         FlickrConnector.loadImage(url: bigPhotoUrl.value!) { (error, image) in
             if image != nil {
                 self.bigPhoto.value = image
+            }
+        }
+        FlickrConnector.requestPhotoInfo(id: photoID.value!) { (error, photo) in
+            
+            if let photo = photo {
+                self.photoDetail.value = photo
+//                self.owner.value = photo.ownerUserName
+//                self.dateOfTaken.value = photo.dateOfTaken
+//                self.description.value = photo.description
+//                self.tags.value = photo.tags
             }
         }
     }

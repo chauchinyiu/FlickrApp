@@ -5,7 +5,7 @@
 - [x] You may use third party libraries
 - [x] Use a software version control system
 - [x] Fetch data from the web
-- [] Metadata must be visible for each image
+- [x] Metadata must be visible for each image
 
 ##Optional Requirements
 - [x] Image Caching

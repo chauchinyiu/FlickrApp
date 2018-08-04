@@ -11,10 +11,10 @@ import LittleFramework
 
 final class PhotosBrowserViewModel: ViewModel {
     
-     let kittenPhotos = Bindable<[FlickrPhoto]>([])
-     let dogsPhotos = Bindable<[FlickrPhoto]>([])
-     let popularPhotos = Bindable<[FlickrPhoto]>([])
-     let recentPhotos = Bindable<[FlickrPhoto]>([])
+     let kittenPhotos = Bindable<[Photo]>([])
+     let dogsPhotos = Bindable<[Photo]>([])
+     let popularPhotos = Bindable<[Photo]>([])
+     let recentPhotos = Bindable<[Photo]>([])
      let kittensPhotosCollectionCellViewModels = Bindable<[PhotoCollectionViewCellViewModel]>([])
      let dogsPhotosCollectionCellViewModels = Bindable<[PhotoCollectionViewCellViewModel]>([])
      let recentPhotosCollectionCellViewModels = Bindable<[PhotoCollectionViewCellViewModel]>([])
@@ -78,7 +78,7 @@ final class PhotosBrowserViewModel: ViewModel {
             }
         })
     }
-    private lazy var kittenPhotosBinder: Binder<[FlickrPhoto]> = Binder<[FlickrPhoto]> {[unowned self] (photos) in
+    private lazy var kittenPhotosBinder: Binder<[Photo]> = Binder<[Photo]> {[unowned self] (photos) in
         if !photos.isEmpty {
             print("------cat--------")
                        print(photos)
@@ -86,14 +86,14 @@ final class PhotosBrowserViewModel: ViewModel {
         }
     }
     
-    private lazy var dogsPhotosBinder: Binder<[FlickrPhoto]> = Binder<[FlickrPhoto]> {[unowned self] (photos) in
+    private lazy var dogsPhotosBinder: Binder<[Photo]> = Binder<[Photo]> {[unowned self] (photos) in
         if !photos.isEmpty {
             print("------dog--------")
                        print(photos)
             self.dogsPhotosCollectionCellViewModels.value = photos.map(PhotoCollectionViewCellViewModel.init)
         }
     }
-    private lazy var popularPhotosBinder: Binder<[FlickrPhoto]> = Binder<[FlickrPhoto]> {[unowned self] (photos) in
+    private lazy var popularPhotosBinder: Binder<[Photo]> = Binder<[Photo]> {[unowned self] (photos) in
         if !photos.isEmpty {
               print("------popular--------")
               print(photos)
@@ -102,7 +102,7 @@ final class PhotosBrowserViewModel: ViewModel {
         }
     
     
-    private lazy var recentPhotosBinder: Binder<[FlickrPhoto]> = Binder<[FlickrPhoto]> {[unowned self] (photos) in
+    private lazy var recentPhotosBinder: Binder<[Photo]> = Binder<[Photo]> {[unowned self] (photos) in
          if !photos.isEmpty {
             print("------recent--------")
                        print(photos)

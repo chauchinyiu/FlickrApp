@@ -15,11 +15,17 @@ class PhotoDetailViewController: UIViewController,ViewModelDriven {
     var viewModel: ViewModelType!
     
     @IBOutlet weak var photoImage: UIImageView!
+        @IBOutlet weak var ownerName: UILabel!
+        @IBOutlet weak var dateOfTaken: UILabel!
+    //    @IBOutlet weak var descriptionText: UILabel!
+        @IBOutlet weak var tags: UILabel!
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = viewModel.photoName.value
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action: #selector(actionButtonPressed))
         imageBinder <~ viewModel.bigPhoto
+        photoInfoBinder <~ viewModel.photoDetail
         // Do any additional setup after loading the view.
     }
     private(set) lazy var imageBinder: Binder<UIImage?> = Binder<UIImage?> {[unowned self] (image) in
@@ -27,7 +33,14 @@ class PhotoDetailViewController: UIViewController,ViewModelDriven {
             self.photoImage.image = image
         }
     }
-    
+    private(set) lazy var photoInfoBinder: Binder<Photo?> = Binder<Photo?> {[unowned self] (photoInfo) in
+        DispatchQueue.main.async {
+           self.ownerName.text = photoInfo?.ownerUserName
+            self.dateOfTaken.text = photoInfo?.dateOfTaken
+           //self.descriptionText.text = photoInfo?.description
+            self.tags.text = photoInfo?.tags
+        }
+    }
     @objc func actionButtonPressed(_ sender:Any?){
         let alert = UIAlertController(title: "Further Actions", message: "Please Select an Option", preferredStyle: .actionSheet)
         
@@ -43,6 +56,10 @@ class PhotoDetailViewController: UIViewController,ViewModelDriven {
             else {
                 self.showAlert(message: "Cannot save the image!")
             }
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Save Image to Photo Library", style: .default , handler:{ (UIAlertAction)in
+              self.saveImageInPhotoLibrary()
         }))
         
         alert.addAction(UIAlertAction(title: "Open image in browser", style: .default , handler:{ (UIAlertAction)in
@@ -77,7 +94,16 @@ class PhotoDetailViewController: UIViewController,ViewModelDriven {
         self.present(activityViewController, animated: true, completion: nil)
     }
     
- 
+    private func saveImageInPhotoLibrary(){
+        UIImageWriteToSavedPhotosAlbum(self.photoImage.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    @objc private func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if error != nil {
+            showAlert(message: "Error!")
+        } else {
+            showAlert(message: "Saved!")
+        }
+    }
       private func saveImageInDocuments() -> Bool{
             guard let image = self.photoImage.image else {
                 return false
