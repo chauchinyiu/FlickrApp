@@ -11,16 +11,29 @@ import LittleFramework
 class PhotosBrowserViewController: UITableViewController,ViewModelDriven {
     typealias ViewModelType = PhotosBrowserViewModel
     var viewModel: ViewModelType! = ViewModelType()
-
+    @IBOutlet weak var sortedReloadButtonItem: UIBarButtonItem!
+    var inDescendingOrder : Bool = true {
+        didSet{
+            updateSortedReloadButtonItem()
+        }
+    }
     override func viewDidLoad() {
-        self.viewModel.loadPhotos()
+        
+        self.viewModel.loadPhotos(inDescendingOrder)
+        updateSortedReloadButtonItem()
         self.kittensCellViewModelsBinder <~ self.viewModel.kittensPhotosCollectionCellViewModels
         self.dogsCellViewModelsBinder <~ self.viewModel.dogsPhotosCollectionCellViewModels
-        self.popularCellViewModelsBinder <~ self.viewModel.popularPhotosCollectionCellViewModels
+        self.interestingCellViewModelsBinder <~ self.viewModel.interestingPhotosCollectionCellViewModels
         self.recentCellViewModelsBinder <~ self.viewModel.recentPhotosCollectionCellViewModels
     }
     
-    
+    private func updateSortedReloadButtonItem(){
+        if inDescendingOrder == true {
+            self.sortedReloadButtonItem.title = "🔄 Oldest Photos"
+        }else {
+             self.sortedReloadButtonItem.title = "🔄 Latest Photos"
+        }
+    }
     private(set) lazy var kittensCellViewModelsBinder: Binder<[PhotoCollectionViewCellViewModel]> = Binder<[PhotoCollectionViewCellViewModel]> {[unowned self] (cellViewModels) in
         DispatchQueue.main.async {
             if let cell: PhotosTableViewCell = self.tableView.cellForRow(at:Section.cats.sectionIndexPath) as? PhotosTableViewCell{
@@ -39,9 +52,9 @@ class PhotosBrowserViewController: UITableViewController,ViewModelDriven {
         }
     }
     
-    private(set) lazy var popularCellViewModelsBinder: Binder<[PhotoCollectionViewCellViewModel]> = Binder<[PhotoCollectionViewCellViewModel]> {[unowned self] (cellViewModels) in
+    private(set) lazy var interestingCellViewModelsBinder: Binder<[PhotoCollectionViewCellViewModel]> = Binder<[PhotoCollectionViewCellViewModel]> {[unowned self] (cellViewModels) in
         DispatchQueue.main.async {
-            if let cell: PhotosTableViewCell = self.tableView.cellForRow(at: Section.popular.sectionIndexPath) as? PhotosTableViewCell{
+            if let cell: PhotosTableViewCell = self.tableView.cellForRow(at: Section.interesting.sectionIndexPath) as? PhotosTableViewCell{
                 cell.updateCollectionViewContent(viewModels: cellViewModels)
             }
             
@@ -55,7 +68,8 @@ class PhotosBrowserViewController: UITableViewController,ViewModelDriven {
         }
     }
     @IBAction func refreshButtonPressed(_ sender: Any){
-        viewModel.loadPhotos()
+         inDescendingOrder = !inDescendingOrder
+         viewModel.loadPhotos(inDescendingOrder)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
