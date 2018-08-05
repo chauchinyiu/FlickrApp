@@ -68,15 +68,22 @@ class FlickrConnector: NSObject {
         }
     }
     
-    static func requestPhotos(method: Method, onCompletion: @escaping FlickrResponse) -> Void {
+    static func requestPhotos(method: Method, _ isPostDescending: Bool = true, onCompletion: @escaping FlickrResponse) -> Void {
         
         var components = self.basicUrlComponents
         
         components?.queryItems?.append(URLQueryItem(name: "method", value:method.methodKey))
         components?.queryItems?.append(URLQueryItem(name: "per_page", value:"15"))
+   
+
+       
         if case .search(let value) = method
         {
             components?.queryItems?.append(URLQueryItem(name: "tags", value: value))
+               // default is date-posted-desc
+            if isPostDescending == false {
+                components?.queryItems?.append(URLQueryItem(name: "sort", value:"date-posted-asc"))
+            }
         }
  
         let searchTask = URLSession.shared.dataTask(with: (components?.url)!, completionHandler: {data, response, error -> Void in
@@ -137,7 +144,7 @@ class FlickrConnector: NSObject {
                 
                 print("----- photo -------")
                 print(photoDictionary)
-                 print("------------------")
+                print("------------------")
                 onCompletion(nil, Photo(photoDictionary: photoDictionary))
                 
             } catch let error as NSError {
