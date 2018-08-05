@@ -15,14 +15,16 @@ class PhotoDetailViewController: UIViewController,ViewModelDriven {
     var viewModel: ViewModelType!
     
     @IBOutlet weak var photoImage: UIImageView!
+        @IBOutlet weak var titleText: UILabel!
         @IBOutlet weak var ownerName: UILabel!
         @IBOutlet weak var dateOfTaken: UILabel!
-    //    @IBOutlet weak var descriptionText: UILabel!
+        @IBOutlet weak var dateUploaded : UILabel!
         @IBOutlet weak var tags: UILabel!
  
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = viewModel.photoName.value
+        self.titleText.text = "Title: \(viewModel.photoName.value ?? "")"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action: #selector(actionButtonPressed))
         imageBinder <~ viewModel.bigPhoto
         photoInfoBinder <~ viewModel.photoDetail
@@ -35,112 +37,64 @@ class PhotoDetailViewController: UIViewController,ViewModelDriven {
     }
     private(set) lazy var photoInfoBinder: Binder<Photo?> = Binder<Photo?> {[unowned self] (photoInfo) in
         DispatchQueue.main.async {
-           self.ownerName.text = photoInfo?.ownerUserName
-            self.dateOfTaken.text = photoInfo?.dateOfTaken
-           //self.descriptionText.text = photoInfo?.description
-            self.tags.text = photoInfo?.tags
+            self.ownerName.text? = "Owner: \(photoInfo?.ownerUserName ?? "")"
+            self.dateOfTaken.text = "Date Taken: \(photoInfo?.dateOfTaken ?? "")"
+            self.dateUploaded.text = "Date Uploaded: \(photoInfo?.dateUploaded ?? "")" 
+            self.tags.text = "Tags: \(photoInfo?.tags ?? "")"
         }
     }
     @objc func actionButtonPressed(_ sender:Any?){
         let alert = UIAlertController(title: "Further Actions", message: "Please Select an Option", preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Share Image", style: .default , handler:{ (UIAlertAction)in
-           self.shareImage()
+            guard let image = self.photoImage.image else {
+                return
+            }
+            UtilitiesTool.share(image: image, in: self)
         }))
         
         alert.addAction(UIAlertAction(title: "Save Image to document folder", style: .default , handler:{ (UIAlertAction)in
-            let success = self.saveImageInDocuments()
-            if success == true {
-                self.showAlert(message: "Successfully saved the image the app documents folder")
+            guard let image = self.photoImage.image, let name = self.viewModel.photoName.value else {
+                return
             }
-            else {
-                self.showAlert(message: "Cannot save the image!")
-            }
+           UtilitiesTool.saveImageInDocuments(image: image, name: name, in: self)
+    
         }))
         
         alert.addAction(UIAlertAction(title: "Save Image to Photo Library", style: .default , handler:{ (UIAlertAction)in
-              self.saveImageInPhotoLibrary()
+            guard let image = self.photoImage.image else {
+                return
+            }
+            UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
         }))
         
         alert.addAction(UIAlertAction(title: "Open image in browser", style: .default , handler:{ (UIAlertAction)in
- 
-            self.openImageInBrowser()
+            guard let url = self.viewModel.bigPhotoUrl.value else {
+                return
+            }
+            UtilitiesTool.openImageInBrowser(imageURL: url)
         }))
         
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (UIAlertAction)in
-            print("User click Dismiss button")
+            
         }))
         
         self.present(alert, animated: true, completion: {
-            print("completion block")
+        
         })
     }
     
     
+ 
     
-    private func shareImage(){
-        // image to share
-        let image = self.photoImage.image
-        
-        // set up activity view controller
-        let imageToShare = [image]
-        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-        
-        // exclude some activity types from the list (optional)
-        activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
-        
-        // present the view controller
-        self.present(activityViewController, animated: true, completion: nil)
-    }
-    
-    private func saveImageInPhotoLibrary(){
-        UIImageWriteToSavedPhotosAlbum(self.photoImage.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
-    }
+ 
     @objc private func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if error != nil {
-            showAlert(message: "Error!")
+            UtilitiesTool.showAlert(message: "Failed to save in photo library", in: self)
         } else {
-            showAlert(message: "Saved!")
+            UtilitiesTool.showAlert(message: "Successfully saved!!!", in: self)
         }
-    }
-      private func saveImageInDocuments() -> Bool{
-            guard let image = self.photoImage.image else {
-                return false
-            }
-            guard let data = UIImageJPEGRepresentation(image, 1) ?? UIImagePNGRepresentation(image) else {
-                return false
-            }
-            guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
-                return false
-            }
-            do {
-                var name = "defaultname.png"
-                if let text = self.viewModel.photoName.value {
-                    name = "\(text).png"
-                }
-              try data.write(to: directory.appendingPathComponent(name)!)
-                return true
-            } catch {
-                print(error.localizedDescription)
-                return false
-            }
-        }
-    
-    private func openImageInBrowser(){
-        guard let url = self.viewModel.bigPhotoUrl.value else {
-            return
-        }
-        UIApplication.shared.open( url, options: [:], completionHandler: { (status) in
-            
-        })
     }
     
-    private func showAlert(message:String) {
-        let alertController = UIAlertController(title: "Flickr App", message:
-            message, preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
-        
-        self.present(alertController, animated: true, completion: nil)
-    }
+ 
 }
