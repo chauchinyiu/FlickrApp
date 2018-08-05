@@ -33,10 +33,6 @@ final class PhotoDetailViewModel: ViewModel {
             
             if let photo = photo {
                 self.photoDetail.value = photo
-//                self.owner.value = photo.ownerUserName
-//                self.dateOfTaken.value = photo.dateOfTaken
-//                self.description.value = photo.description
-//                self.tags.value = photo.tags
             }
         }
     }
