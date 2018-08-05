@@ -93,12 +93,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="KI Labs" id="orf-Dh-aAz">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="rLc-Lm-gfq">
+                        <barButtonItem key="rightBarButtonItem" title="Item" style="plain" id="rLc-Lm-gfq">
                             <connections>
                                 <action selector="refreshButtonPressed:" destination="n4v-wa-sRe" id="kJl-CN-LQ1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="sortedReloadButtonItem" destination="rLc-Lm-gfq" id="Yu1-Th-RHV"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cql-BE-do5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -122,45 +125,35 @@
                                     <constraint firstAttribute="width" secondItem="Lvb-Zx-gcG" secondAttribute="height" multiplier="1:1" id="j14-ie-j33"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="7iH-nq-rvp">
-                                <rect key="frame" x="0.0" y="439" width="375" height="197"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="imK-nK-IIz">
+                                <rect key="frame" x="16" y="447" width="349" height="102.5"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="N3n-lL-5hi">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="137"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" text="Owner:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HbF-ST-Shv" userLabel="Owner:">
-                                                <rect key="frame" x="0.0" y="0.0" width="55.5" height="137"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uzh-kK-GX3">
-                                                <rect key="frame" x="65.5" y="0.0" width="309.5" height="137"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wBz-EP-tdd">
-                                        <rect key="frame" x="0.0" y="142" width="375" height="50"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" text="Date of taken:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d63-wa-ZSC">
-                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="50"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4X-Mq-Mtb">
-                                                <rect key="frame" x="187.5" y="0.0" width="187.5" height="50"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CbC-TK-qCd">
-                                        <rect key="frame" x="0.0" y="197" width="375" height="0.0"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGk-sG-LwI">
+                                        <rect key="frame" x="0.0" y="0.0" width="38" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date uploaded:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zbN-9P-lEX">
+                                        <rect key="frame" x="0.0" y="20.5" width="116.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date taken:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9JL-FZ-Dzq">
+                                        <rect key="frame" x="0.0" y="41" width="87.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Owner:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rMJ-eY-2Lu">
+                                        <rect key="frame" x="0.0" y="61.5" width="105" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7V-YY-Yzj">
+                                        <rect key="frame" x="0.0" y="82" width="41" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -170,19 +163,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="imK-nK-IIz" firstAttribute="leading" secondItem="Lwb-Rd-Psy" secondAttribute="leading" constant="16" id="1lQ-XH-BcI"/>
                             <constraint firstItem="Lvb-Zx-gcG" firstAttribute="top" secondItem="LgJ-pW-JC7" secondAttribute="bottom" id="5UM-mQ-F1J"/>
-                            <constraint firstItem="7iH-nq-rvp" firstAttribute="top" secondItem="Lvb-Zx-gcG" secondAttribute="bottom" id="R94-UM-O42"/>
+                            <constraint firstItem="imK-nK-IIz" firstAttribute="top" secondItem="Lvb-Zx-gcG" secondAttribute="bottom" constant="8" id="R2c-tg-4NO"/>
                             <constraint firstAttribute="trailing" secondItem="Lvb-Zx-gcG" secondAttribute="trailing" id="gMs-9V-GSu"/>
                             <constraint firstItem="Lvb-Zx-gcG" firstAttribute="leading" secondItem="Lwb-Rd-Psy" secondAttribute="leading" id="gep-aX-V8P"/>
-                            <constraint firstItem="7iH-nq-rvp" firstAttribute="leading" secondItem="Lwb-Rd-Psy" secondAttribute="leading" id="kVB-ef-W8h"/>
-                            <constraint firstAttribute="trailing" secondItem="7iH-nq-rvp" secondAttribute="trailing" id="vwc-EF-DC4"/>
+                            <constraint firstAttribute="trailing" secondItem="imK-nK-IIz" secondAttribute="trailing" constant="10" id="p9C-JH-a4D"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="dateOfTaken" destination="z4X-Mq-Mtb" id="NzT-eT-bJQ"/>
-                        <outlet property="ownerName" destination="uzh-kK-GX3" id="RYs-fY-Afh"/>
+                        <outlet property="dateOfTaken" destination="9JL-FZ-Dzq" id="cxN-dj-fYX"/>
+                        <outlet property="dateUploaded" destination="zbN-9P-lEX" id="4D2-EL-Rff"/>
+                        <outlet property="ownerName" destination="rMJ-eY-2Lu" id="clR-Lq-j02"/>
                         <outlet property="photoImage" destination="Lvb-Zx-gcG" id="Z9r-ij-isB"/>
-                        <outlet property="tags" destination="CbC-TK-qCd" id="OE4-s9-GfG"/>
+                        <outlet property="tags" destination="y7V-YY-Yzj" id="KEJ-9r-7Q5"/>
+                        <outlet property="titleText" destination="fGk-sG-LwI" id="h1h-f6-AY9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uBn-sB-YCU" userLabel="First Responder" sceneMemberID="firstResponder"/>
