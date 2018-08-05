@@ -67,19 +67,7 @@ class BaseUnitTests: XCTestCase {
         expect(bindable, description: "Bindable \(bindable) changes to non-nil value", toPassValueTest: { $0 != nil }, failOtherwise: failOtherwise)
     }
     
-    // MARK: - Signal Receiver Expectations
+ 
     
-    final func expectEmit(_ signalEmitter: SignalEmitter, description: String? = nil, times: Int = 1) {
-        let expectation = self.expectation(description: description ?? "SignalEmitter \(signalEmitter) emits \(times) time(s)")
-        var emitCounter = 0
-        let signalReceiver = SignalReceiver {
-            emitCounter += 1
-            print("SignalEmitter \(signalEmitter) emitted \(emitCounter) of \(times) expected signals")
-            if emitCounter == times {
-                expectation.fulfill()
-            }
-        }
-        expectationSignalReceivers.append(signalReceiver)
-        signalReceiver <~ signalEmitter
-    }
+
 }

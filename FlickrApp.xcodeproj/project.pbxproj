@@ -16,6 +16,7 @@
 		E516DFF1211275FD003C32B6 /* PhotosBrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516DFF0211275FD003C32B6 /* PhotosBrowserViewModel.swift */; };
 		E516DFF521127BE2003C32B6 /* PhotoCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516DFF421127BE2003C32B6 /* PhotoCollectionViewCellViewModel.swift */; };
 		E516E4802117222C00309B14 /* UtilitiesTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516E47F2117222C00309B14 /* UtilitiesTool.swift */; };
+		E516E48321173CC800309B14 /* UtilitiesTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516E47F2117222C00309B14 /* UtilitiesTool.swift */; };
 		E52D935021149A9100045794 /* BaseUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52D934F21149A9100045794 /* BaseUnitTests.swift */; };
 		E52D935121149AF600045794 /* LittleFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDBB4521148E9A00163BD6 /* LittleFramework.framework */; };
 		E52D93542114A28800045794 /* PhotosBrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516DFF0211275FD003C32B6 /* PhotosBrowserViewModel.swift */; };
@@ -334,6 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E516E48321173CC800309B14 /* UtilitiesTool.swift in Sources */,
 				E52D93542114A28800045794 /* PhotosBrowserViewModel.swift in Sources */,
 				E52D93582114A29400045794 /* FlickrConnector.swift in Sources */,
 				E52D93572114A29200045794 /* Photo.swift in Sources */,

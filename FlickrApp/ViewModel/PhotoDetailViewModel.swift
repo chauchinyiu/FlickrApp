@@ -30,7 +30,6 @@ final class PhotoDetailViewModel: ViewModel {
             }
         }
         FlickrConnector.requestPhotoInfo(id: photoID.value!) { (error, photo) in
-            
             if let photo = photo {
                 self.photoDetail.value = photo
             }

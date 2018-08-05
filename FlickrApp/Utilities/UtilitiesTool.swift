@@ -1,5 +1,5 @@
 //
-//  Helper.swift
+//  UtilitiesTool.swift
 //  FlickrApp
 //
 //  Created by Chau Chin Yiu on 5/8/2018.
@@ -12,22 +12,13 @@ class UtilitiesTool  {
     
     
     static func share(image: UIImage,  in viewController: UIViewController){
-        // image to share
-        let image = image
-        
-        // set up activity view controller
         let imageToShare = [image]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = viewController.view // so that iPads won't crash
-        
-        // exclude some activity types from the list (optional)
+        activityViewController.popoverPresentationController?.sourceView = viewController.view
         activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
-        
-        // present the view controller
         viewController.present(activityViewController, animated: true, completion: nil)
     }
     
- 
     static func saveImageInDocuments(image: UIImage, name: String = "default", in viewController: UIViewController)   {
      
         guard let data = UIImageJPEGRepresentation(image, 1) ?? UIImagePNGRepresentation(image) else {
