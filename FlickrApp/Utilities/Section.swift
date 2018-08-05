@@ -11,7 +11,7 @@ import Foundation
 enum Section : Int{
     case cats = 0
     case dogs = 1
-    case popular = 2
+    case interesting = 2
     case recent = 3
     
     var sectionTitle: String {
@@ -20,8 +20,8 @@ enum Section : Int{
             return "Cat"
         case .dogs:
             return "Dogs"
-        case .popular:
-            return "Popular"
+        case .interesting:
+            return "Interesting"
         case .recent:
             return "Recent"
         }
@@ -34,7 +34,7 @@ enum Section : Int{
             return IndexPath(row: 0, section: 0)
         case .dogs:
             return IndexPath(row: 0, section: 1)
-        case .popular:
+        case .interesting:
             return IndexPath(row: 0, section: 2)
         case .recent:
             return IndexPath(row: 0, section: 3)

@@ -13,19 +13,19 @@ final class PhotosBrowserViewModel: ViewModel {
     
      let kittenPhotos = Bindable<[Photo]>([])
      let dogsPhotos = Bindable<[Photo]>([])
-     let popularPhotos = Bindable<[Photo]>([])
+     let interestingPhotos = Bindable<[Photo]>([])
      let recentPhotos = Bindable<[Photo]>([])
      let kittensPhotosCollectionCellViewModels = Bindable<[PhotoCollectionViewCellViewModel]>([])
      let dogsPhotosCollectionCellViewModels = Bindable<[PhotoCollectionViewCellViewModel]>([])
      let recentPhotosCollectionCellViewModels = Bindable<[PhotoCollectionViewCellViewModel]>([])
-     let popularPhotosCollectionCellViewModels = Bindable<[PhotoCollectionViewCellViewModel]>([])
+     let interestingPhotosCollectionCellViewModels = Bindable<[PhotoCollectionViewCellViewModel]>([])
     
      let requestError  = Bindable<Error?>(nil)
      init(){
         kittenPhotosBinder <~ self.kittenPhotos
         dogsPhotosBinder <~ self.dogsPhotos
         recentPhotosBinder <~ self.recentPhotos
-        popularPhotosBinder <~ self.popularPhotos
+        interestingPhotosBinder <~ self.interestingPhotos
      }
    
     public func retrieveLoadedPhotoCollectionViewCellViewModels( section: Int) -> [PhotoCollectionViewCellViewModel]{
@@ -35,7 +35,7 @@ final class PhotosBrowserViewModel: ViewModel {
         case 1:
             return dogsPhotosCollectionCellViewModels.value
         case 2:
-            return popularPhotosCollectionCellViewModels.value
+            return interestingPhotosCollectionCellViewModels.value
         case 3:
             return recentPhotosCollectionCellViewModels.value
         default:
@@ -43,9 +43,9 @@ final class PhotosBrowserViewModel: ViewModel {
         }
     }
     
-     public func loadPhotos(){
+    public func loadPhotos(_ isPostDescending: Bool = true){
         
-        FlickrConnector.requestPhotos(method: .search(value: "cats"), onCompletion: { (error, photos) in
+        FlickrConnector.requestPhotos(method: .search(value: "cats"), isPostDescending, onCompletion: { (error, photos) in
             if error == nil, let photos = photos, !photos.isEmpty {
                 self.kittenPhotos.value = photos
             } else {
@@ -54,7 +54,7 @@ final class PhotosBrowserViewModel: ViewModel {
         })
         
         
-        FlickrConnector.requestPhotos(method: .search(value: "dogs"), onCompletion: { (error, photos) in
+        FlickrConnector.requestPhotos(method: .search(value: "dogs"), isPostDescending, onCompletion: { (error, photos) in
             if error == nil, let photos = photos, !photos.isEmpty {
                 self.dogsPhotos.value = photos
             } else {
@@ -62,15 +62,15 @@ final class PhotosBrowserViewModel: ViewModel {
             }
         })
         
-        FlickrConnector.requestPhotos(method: .popular, onCompletion: { (error, photos) in
+        FlickrConnector.requestPhotos(method: .interesting, isPostDescending, onCompletion: { (error, photos) in
             if error == nil, let photos = photos, !photos.isEmpty {
-                self.popularPhotos.value = photos
+                self.interestingPhotos.value = photos
             } else {
                 self.requestError.value = error
             }
         })
         
-        FlickrConnector.requestPhotos(method: .recent, onCompletion: { (error, photos) in
+        FlickrConnector.requestPhotos(method: .recent, isPostDescending, onCompletion: { (error, photos) in
             if error == nil, let photos = photos, !photos.isEmpty {
                 self.recentPhotos.value = photos
             } else {
@@ -93,11 +93,11 @@ final class PhotosBrowserViewModel: ViewModel {
             self.dogsPhotosCollectionCellViewModels.value = photos.map(PhotoCollectionViewCellViewModel.init)
         }
     }
-    private lazy var popularPhotosBinder: Binder<[Photo]> = Binder<[Photo]> {[unowned self] (photos) in
+    private lazy var interestingPhotosBinder: Binder<[Photo]> = Binder<[Photo]> {[unowned self] (photos) in
         if !photos.isEmpty {
-              print("------popular--------")
+              print("------interesting--------")
               print(photos)
-             self.popularPhotosCollectionCellViewModels.value = photos.map(PhotoCollectionViewCellViewModel.init)
+             self.interestingPhotosCollectionCellViewModels.value = photos.map(PhotoCollectionViewCellViewModel.init)
             }
         }
     

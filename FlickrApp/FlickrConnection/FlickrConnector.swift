@@ -36,14 +36,14 @@ class FlickrConnector: NSObject {
     enum Method {
         case search(value: String)
         case recent
-        case popular
+        case interesting
         case photo
         
         var methodKey : String {
             switch (self) {
             case .search: return "flickr.photos.search"
             case .recent: return "flickr.photos.getRecent"
-            case .popular: return "flickr.interestingness.getList"
+            case .interesting: return "flickr.interestingness.getList"
             case .photo: return "flickr.photos.getInfo"
                 
             }
