@@ -1,5 +1,5 @@
 //
-//  ImageCollectionViewCell.swift
+//  PhotoCollectionViewCell.swift
 //  FlickrApp
 //
 //  Created by Chau Chin Yiu on 2/8/2018.

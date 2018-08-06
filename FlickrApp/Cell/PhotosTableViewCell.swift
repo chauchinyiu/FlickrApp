@@ -1,5 +1,5 @@
 //
-//  TableViewCell.swift
+//  PhotosTableViewCell.swift
 //  FlickrApp
 //
 //  Created by Chau Chin Yiu on 31/7/2018.
