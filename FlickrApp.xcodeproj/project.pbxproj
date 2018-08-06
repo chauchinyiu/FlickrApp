@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E50F29C82118494200DAA5FC /* PhotoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50F29C72118494200DAA5FC /* PhotoTest.swift */; };
 		E50F3B432114F45A007E3363 /* LittleFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E5FDBB4521148E9A00163BD6 /* LittleFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E515E55C2113B64800D96C8C /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515E55B2113B64800D96C8C /* PhotoDetailViewController.swift */; };
 		E515E55E2113BA8B00D96C8C /* PhotoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515E55D2113BA8B00D96C8C /* PhotoDetailViewModel.swift */; };
@@ -60,6 +61,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E50F29C72118494200DAA5FC /* PhotoTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTest.swift; sourceTree = "<group>"; };
 		E515E55B2113B64800D96C8C /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		E515E55D2113BA8B00D96C8C /* PhotoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewModel.swift; sourceTree = "<group>"; };
 		E515E55F2113CB0400D96C8C /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				E5850ECE2110913A00B9C005 /* FlickrAppTests.swift */,
 				E5850ED02110913A00B9C005 /* Info.plist */,
 				E52D934F21149A9100045794 /* BaseUnitTests.swift */,
+				E50F29C72118494200DAA5FC /* PhotoTest.swift */,
 			);
 			path = FlickrAppTests;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				E52D93572114A29200045794 /* Photo.swift in Sources */,
 				E52D935021149A9100045794 /* BaseUnitTests.swift in Sources */,
 				E52D93552114A28800045794 /* PhotoCollectionViewCellViewModel.swift in Sources */,
+				E50F29C82118494200DAA5FC /* PhotoTest.swift in Sources */,
 				E5850ECF2110913A00B9C005 /* FlickrAppTests.swift in Sources */,
 				E52D93562114A28800045794 /* PhotoDetailViewModel.swift in Sources */,
 			);
