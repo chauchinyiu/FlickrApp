@@ -1,5 +1,7 @@
 # FlickrApp
 
+This project at the moment is only built for simulator.
+
 ##Mandatory Requirements
 - [x] Use the latest development tools for the platform you are working on
 - [x] You may use third party libraries
@@ -15,3 +17,5 @@
 - [x] Open image in browser
 - [x] Order image by date
 - [x] Unit Tests
+
+Demo videos are attached in the repository
