@@ -30,13 +30,13 @@ final class PhotosBrowserViewModel: ViewModel {
    
     public func retrieveLoadedPhotoCollectionViewCellViewModels( section: Int) -> [PhotoCollectionViewCellViewModel]{
         switch(section){
-        case 0:
+        case Section.cats.rawValue :
             return kittensPhotosCollectionCellViewModels.value
-        case 1:
+        case Section.dogs.rawValue :
             return dogsPhotosCollectionCellViewModels.value
-        case 2:
+        case Section.interesting.rawValue :
             return interestingPhotosCollectionCellViewModels.value
-        case 3:
+        case Section.recent.rawValue :
             return recentPhotosCollectionCellViewModels.value
         default:
             return []
